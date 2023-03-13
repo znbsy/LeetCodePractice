@@ -6,9 +6,9 @@ public class SymmetricTree {
             return true;
         }
 
-        return isSame(left, reversedTree(right));
+        return areSymmetric(left, right);
     }
-    public boolean isSame(TreeNode root1, TreeNode root2){
+    public  boolean areSymmetric(TreeNode root1, TreeNode root2){
         if (root1 == null && root2 == null){
             return true;
         }
@@ -17,19 +17,10 @@ public class SymmetricTree {
             return false;
         }
 
-        if (root1.val != root2.val ){
+        if (root1.val != root2.val){
             return false;
         }
 
-        return isSame(root1.left, root2.left) && isSame(root1.right, root2.right);
-    }
-    public TreeNode reversedTree(TreeNode root){
-        if (root == null){
-            return root;
-        }
-        TreeNode temp = root.left;
-        root.left = reversedTree(root.right);
-        root.right = reversedTree(temp);
-        return root;
+        return areSymmetric(root1.left, root2.right) && areSymmetric(root1.right, root2.left);
     }
 }
