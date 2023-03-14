@@ -17,16 +17,6 @@ public class BinarySearch {
             }
         }
 
-//        if (nums[mid] == target){
-//            return mid;
-//        }
-//        if (nums[begin] == target){
-//            return begin;
-//        }
-//        if (nums[last] == target){
-//            return last;
-//        }
-
         return -1;
     }
 
