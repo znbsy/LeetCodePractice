@@ -1,38 +1,55 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Matrix01 {
     public static int[][] updateMatrix(int[][] mat) {
-        for (int i = 0; i < mat.length; i++) {
-            for (int j = 0; j < mat[0].length; j++) {
-                mat[i][j] = findZero(mat,i , j);
+        int rlen = mat.length;
+        int clen = mat[0].length;
+        int [][] flag = new int[rlen][clen];
+        List<List<Integer>> queue = new ArrayList<>();
+        for (int i = 0; i < rlen; i++) {
+            for (int j = 0; j < clen; j++) {
+                if (mat[i][j] == 0) {
+                    flag[i][j] = 0;
+                    queue.add(List.of(i, j));
+                } else {
+                    flag[i][j] = -1;
+                }
             }
         }
 
 
-        return mat;
-    }
-    public static int findZero (int[][] mat, int row, int col) {
 
-        int count = 0;
-        List<List<Integer>> queue = new ArrayList<>();
-        queue.add(List.of(row, col));
         while (!queue.isEmpty()) {
             List<Integer> curr = queue.remove(0);
-            if (row < 0 || row >= mat.length || col < 0 || col >= mat[0].length) {
-                continue;
-            } else if (mat[row][col] == 0) {
-                return count;
-            } else {
-                queue.add(List.of(row + 1, col));
-                queue.add(List.of(row - 1, col));
-                queue.add(List.of(row, col + 1));
-                queue.add(List.of(row, col - 1));
-                count++;
+            int sr = curr.get(0);
+            int sc = curr.get(1);
+
+
+            if (sr + 1 < rlen &&flag[sr + 1][sc] == -1) {
+                queue.add(List.of(sr + 1, sc));
+                flag[sr + 1][sc] = flag[sr][sc] + 1;
+            }
+            if (sr - 1 >= 0 && flag[sr - 1][sc] == -1 ) {
+                queue.add(List.of(sr - 1, sc));
+                flag[sr - 1][sc] = flag[sr][sc] + 1;
+            }
+
+            if (sc + 1 < clen && flag[sr][sc + 1] == -1) {
+                queue.add(List.of(sr, sc + 1));
+                flag[sr][sc + 1] = flag[sr][sc] + 1;
+            }
+
+            if (sc - 1 >= 0 && flag[sr][sc - 1] == -1) {
+                queue.add(List.of(sr, sc - 1));
+                flag[sr][sc - 1] = flag[sr][sc] + 1;
             }
         }
-        return count;
+        return flag;
     }
+
 
     public static void main(String[] args) {
         int [][] mat = {
@@ -43,8 +60,9 @@ public class Matrix01 {
         int [][] result = updateMatrix(mat);
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < mat[0].length; j++) {
-                System.out.println(result[i][j]);
+                System.out.print(result[i][j] + " ");
             }
+            System.out.println();
         }
     }
 }
