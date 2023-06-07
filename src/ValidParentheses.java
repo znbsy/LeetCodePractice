@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValidParentheses {
-    public static boolean isValid(String s) {
+    public boolean isValid(String s) {
         if (s.length() % 2 != 0) {
             return false;
         }
