@@ -9,7 +9,7 @@ public class ReducingDishes {
             if (sum + satisfaction[i] >= 0) {
                 ans = ans + sum + satisfaction[i];
             } else {
-                continue;
+                break;
             }
             sum += satisfaction[i];
         }
