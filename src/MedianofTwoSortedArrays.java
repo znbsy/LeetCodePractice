@@ -20,7 +20,7 @@ public class MedianofTwoSortedArrays {
                 if (count == mid1) {
                     ans1 = nums2[idx2];
                     if ((m + n) % 2 != 0) {
-                        break;
+                        return ans1;
                     }
                 }
                 if (count == mid2) {
