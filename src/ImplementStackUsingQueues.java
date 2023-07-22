@@ -2,7 +2,7 @@ import java.util.*;
 
 public class ImplementStackUsingQueues {
     Queue<Integer> stack;
-    public MyStack() {
+    public ImplementStackUsingQueues() {
         this.stack = new LinkedList<>();
     }
 
