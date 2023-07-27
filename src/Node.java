@@ -2,7 +2,9 @@ public class Node {
     public int val;
     public Node left;
     public Node right;
+    public Node prev;
     public Node next;
+    public Node child;
 
     public Node() {}
 
@@ -10,10 +12,12 @@ public class Node {
         val = _val;
     }
 
-    public Node(int _val, Node _left, Node _right, Node _next) {
+    public Node(int _val, Node _left, Node _right, Node _next, Node _prev, Node _child) {
         val = _val;
         left = _left;
         right = _right;
         next = _next;
+        prev = _prev;
+        child = _child;
     }
 }
