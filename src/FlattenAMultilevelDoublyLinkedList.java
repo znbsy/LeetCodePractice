@@ -6,6 +6,7 @@ public class FlattenAMultilevelDoublyLinkedList {
         if (head.child == null) {
             flatten(head.next);
         } else {
+            head.child.prev = head;
             Node temp = head.next;
             head.next = head.child;
             head.child = null;
@@ -14,11 +15,14 @@ public class FlattenAMultilevelDoublyLinkedList {
             while (curr.next != null) {
                 curr = curr.next;
             }
-            curr.next = flatten(temp);
-            temp.prev = curr;
+            flatten(temp);
+            curr.next = temp;
+            if (temp != null) {
+                temp.prev = curr;
+            }
         }
 
-        System.out.println(head.val);
+        //System.out.println(head.val);
         return head;
     }
 
@@ -26,13 +30,9 @@ public class FlattenAMultilevelDoublyLinkedList {
         Node n3 = new Node(3);
         Node n2 = new Node(2);
         Node n1 = new Node(1);
-        n3.prev = null;
-        n2.prev = n1;
-        n1.prev = null;
-        n1.next = n2;
-        n2.next = null;
-        n3.next = null;
-        n1.child = n3;
+
+        n1.child = n2;
+        n2.child = n3;
         System.out.println(flatten(n1));
     }
 }
