@@ -3,7 +3,6 @@ import java.util.Arrays;
 public class MaximizeSumOfArrayAfterKNegations {
     public static int largestSumAfterKNegations(int[] nums, int k) {
         Arrays.sort(nums);
-
         for (int i = 0; i < nums.length; i++) {
             if (k == 0) {
                 break;
