@@ -27,7 +27,7 @@ public class MyLinkedList {
     public void addAtIndex(int index, int val) {
         if (index >=0 && index < list.size()) {
             list.add(index, val);
-        } else {
+        } else if (index == list.size()) {
             addAtTail(val);
         }
     }
