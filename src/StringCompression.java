@@ -26,6 +26,7 @@ public class StringCompression {
 
         System.arraycopy(temp, 0, chars, 0, size);
 
+
         return size;
     }
 }
