@@ -6,25 +6,40 @@ public class DecodeString {
         char[] w = s.toCharArray();
         StringBuilder sb = new StringBuilder();
 
-        for (var c: w) {
-            if (c - '0' >= 0 && c - '0' <= 9
-                    || c - 'a' >= 0 && c - 'a' <= 25
-                    || c == '[') {
+        for (char c : w) {
+            if (c == ']') {
+                // Process characters within brackets
+                StringBuilder temp = new StringBuilder();
+                while (!stack.isEmpty() && stack.peek() != '[') {
+                    temp.insert(0, stack.pop());
+                }
+                // Remove the opening bracket
+                stack.pop();
+
+                // Extract the number of repetitions
+                int count = 0;
+                int num = 0;
+                while (!stack.isEmpty() && Character.isDigit(stack.peek())) {
+                    num += (stack.pop() - '0') * Math.pow(10, count);
+                    count++;
+                }
+
+                // Repeat the decoded string and push it back to the stack
+                String repeatedStr = temp.toString().repeat(Math.max(0, num));
+                for (char ch : repeatedStr.toCharArray()) {
+                    stack.push(ch);
+                }
+            } else {
                 stack.push(c);
             }
-
-            if (c == ']') {
-                StringBuilder temp = new StringBuilder();
-                while (true) {
-                    char curr = stack.peek();
-                    if (curr - '0' >= 0 && curr - '0' <= 9) {
-
-                    } else if (curr - 'a' >= 0 && curr - 'a' <= 25) {
-                        temp.append(curr);
-                    }
-                }
-            }
         }
+
+        // Build the result from the stack
+        while (!stack.isEmpty()) {
+            sb.insert(0, stack.pop());
+        }
+
+        return sb.toString();
 
     }
 }
