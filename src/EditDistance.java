@@ -1,6 +1,6 @@
 public class EditDistance {
 
-    public int minDistance(String word1, String word2) {
+    public static int minDistance(String word1, String word2) {
         int n = word1.length();
         int m = word2.length();
 
@@ -9,37 +9,40 @@ public class EditDistance {
         dp[0][0] = 0;
 
         for (int i = 0; i < n + 1; i++) {
-            dp[i][0] = 0;
+            dp[i][0] = i;
         }
 
         for (int j = 0; j < m + 1; j++) {
-            dp[0][j] = 0;
+            dp[0][j] = j;
         }
 
         for (int i = 1; i < n + 1; i++) {
             for (int j = 1; j < m + 1; j++) {
-                int x = dp[i - 1][j - 1] + 1;
+                System.out.println("i: " + i + ", " + word1.charAt(i - 1) +
+                        " j: " + j + ", " + word2.charAt(j - 1));
+
+                int x = dp[i - 1][j - 1] + (word1.charAt(i - 1) != word2.charAt(j - 1)? 1: 0);
                 int y = dp[i][j - 1] + 1;
                 int z = dp[i - 1][j] + 1;
 
+                System.out.println(x + " " + y + " " + z);
+
                 if (y <= z) {
-                    if (x <= y) {
-                        dp[i][j] = x;
-                    } else {
-                        dp[i][j] = y;
-                    }
+                    dp[i][j] = Math.min(x, y);
                 } else {
-                    if (x <= z) {
-                        dp[i][j] = x;
-                    } else {
-                        dp[i][j] = z;
-                    }
+                    dp[i][j] = Math.min(x, z);
                 }
+
+                System.out.println("dp[" + i + "][" + j +"] = " + dp[i][j]);
             }
         }
 
         return dp[n][m];
 
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(minDistance("abc", "bca"));
     }
 }
