@@ -31,10 +31,8 @@ public class TextJustification {
         if (flag) {
             // System.out.println(sb.toString() + "|||" + sb.length() + " diff: " + (maxWidth - sb.length()));
             int diff = maxWidth - sb.length();
-            for (int j = 1; j <= diff; j++) {
-                // System.out.println(j);
-                sb.append(" ");
-            }
+            // System.out.println(j);
+            sb.append(" ".repeat(Math.max(0, diff)));
             // System.out.println("after: " + sb.toString() + "||| " + sb.length());
             // System.out.println();
             return sb.toString();
@@ -62,10 +60,8 @@ public class TextJustification {
             }
         } while (idx != -1);
 
-        if (pos.size() == 0) {
-            for (int j = 1; j <= diff; j++) {
-                sb.append(" ");
-            }
+        if (pos.isEmpty()) {
+            sb.append(" ".repeat(Math.max(0, diff)));
             // System.out.println("after: " + sb.toString() + "||| " + sb.length());
             // System.out.println();
             return sb.toString();
