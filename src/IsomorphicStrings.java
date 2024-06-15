@@ -7,25 +7,25 @@ public class IsomorphicStrings {
         System.out.println(isIsomorphic(s,t));
     }
     public static boolean isIsomorphic(String s, String t) {
-        if(s.length() != t.length()){
-            return false;
-        }
-        Map<Character, Character> mapping = new HashMap<>();
-        for(int i = 0; i < s.length(); i++){
-            if(mapping.containsKey(s.charAt(i))){
-                if(!mapping.get(s.charAt(i)).equals(t.charAt(i))){
-                    return false;
-                }
+        int[] sc = new int[200];
+        int[] tc = new int[200];
+
+
+        for (int i = 0; i < s.length(); i++) {
+            int si = s.charAt(i);
+            int ti = t.charAt(i);
+
+            if (sc[si] != tc[ti]) {
+                return false;
+            } else {
+                sc[si] = i + 1;
+                tc[ti] = i + 1;
             }
-            else{
-                if(mapping.containsValue(t.charAt(i))){
-                    return false;
-                }
-                else{
-                    mapping.put(s.charAt(i), t.charAt(i));
-                }
-            }
+
+
+
         }
+
         return true;
     }
 }
