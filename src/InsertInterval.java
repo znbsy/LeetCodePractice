@@ -5,28 +5,28 @@ import java.util.List;
 
 public class InsertInterval {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        int[][] temp = new int[intervals.length + 1][2];
-
-        System.arraycopy(intervals, 0, temp, 0, intervals.length);
-        temp[intervals.length] = newInterval;
-
-        Arrays.sort(temp, (a, b) -> a[0] - b[0]);
-
         List<int[]> res = new ArrayList<>();
-        int start = temp[0][0], end = temp[0][1];
+        int i = 0;
 
-        for (int i = 1; i < temp.length; i++) {
-            if (temp[i][0] <= end) {
-                end = Math.max(end, temp[i][1]);
-            } else {
-                res.add(new int[]{start, end});
-                start = temp[i][0];
-                end = temp[i][1];
-            }
+        while (i < intervals.length && intervals[i][1] <= newInterval[0]) {
+            res.add(intervals[i]);
+            i++;
         }
-        res.add(new int[]{start, end});
+
+        while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            i++;
+        }
+        res.add(newInterval);
+
+        while (i < intervals.length) {
+            res.add(intervals[i]);
+            i++;
+        }
 
         return res.toArray(new int[res.size()][]);
+
 
 
 
