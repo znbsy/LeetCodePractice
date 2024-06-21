@@ -2,31 +2,35 @@ import java.util.*;
 
 public class RotateList {
     public ListNode rotateRight(ListNode head, int k) {
-        List<Integer> list = new ArrayList<>();
-        ListNode curr = head;
+        if (head == null || k == 0 || head.next == null) return head;
 
-        while (curr != null) {
-            list.add(curr.val);
+        ListNode curr = head;
+        int count = 0;
+
+        while (curr.next != null) {
+            count++;
             curr = curr.next;
         }
+        count++;
+        curr.next = head;
 
-        List<Integer> copy = new ArrayList<>(list);
 
-        int n = list.size();
+        int time = count - k % count;
 
-        for (int i = 0; i < n; i++) {
-            copy.set((i + k) % n, list.get(i));
-        }
         curr = head;
 
-        int i = 0;
-
-        while (i < n) {
-            curr.val = copy.get(i);
+        while (time > 1) {
             curr = curr.next;
-            i++;
+            time--;
         }
-        return head;
+
+        ListNode prev = curr;
+        curr = curr.next;
+        prev.next = null;
+
+
+        return curr;
+
 
     }
 }
