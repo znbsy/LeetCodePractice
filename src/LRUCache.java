@@ -1,57 +1,74 @@
 import java.util.*;
 
-
 public class LRUCache {
 
-    List<Integer> keys;
-    Map<Integer, Integer> map;
-    int capacity;
+    class Node {
+        int key;
+        int value;
+        Node prev;
+        Node next;
 
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    int capacity;
+    Map<Integer, Node> map;
+    Node head;
+    Node tail;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.keys = new ArrayList<>();
-        this.map = new HashMap<>();
+        map = new HashMap<>();
+        head = new Node(-1, -1); // Dummy head
+        tail = new Node(-1, -1); // Dummy tail
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    private void removeNode(Node node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    private void addNodeToTail(Node node) {
+        node.prev = tail.prev;
+        node.next = tail;
+        tail.prev.next = node;
+        tail.prev = node;
+    }
+
+    private void moveToTail(Node node) {
+        removeNode(node);
+        addNodeToTail(node);
     }
 
     public int get(int key) {
         if (!map.containsKey(key)) {
             return -1;
         } else {
-            keys.remove(Integer.valueOf(key));
-            keys.add(key);
-            return map.get(key);
+            Node node = map.get(key);
+            moveToTail(node);
+            return node.value;
         }
-
     }
 
     public void put(int key, int value) {
-        if (map.size() < capacity) {
-            if (map.containsKey(key)) {
-                map.put(key, value);
-                keys.remove(Integer.valueOf(key));
-                keys.add(key);
-            } else {
-                map.put(key, value);
-                keys.add(key);
-            }
-
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            node.value = value;
+            moveToTail(node);
         } else {
-            if (map.containsKey(key)) {
-                map.put(key, value);
-                keys.remove(Integer.valueOf(key));
-                keys.add(key);
-            } else {
-                int k = keys.get(0);
-                map.remove(k);
-                keys.remove(0);
-                map.put(key, value);
-                keys.add(key);
+            if (map.size() >= capacity) {
+                Node oldest = head.next;
+                removeNode(oldest);
+                map.remove(oldest.key);
             }
-
+            Node newNode = new Node(key, value);
+            addNodeToTail(newNode);
+            map.put(key, newNode);
         }
     }
-
-
-
 }
