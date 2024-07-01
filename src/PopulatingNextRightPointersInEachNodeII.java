@@ -12,12 +12,12 @@ public class PopulatingNextRightPointersInEachNodeII {
 
             while (i < size) {
                 Node curr = queue.poll();
-                if (curr == null) {
-                    System.out.println("ssssssssssssssssssbbbbbbbbbbbb");
-                } else {
+
+                if (curr != null) {
                     if (i + 1 < size) {
                         curr.next = queue.peek();
                     }
+
 
                     if (curr.left != null) {
                         queue.add(curr.left);
