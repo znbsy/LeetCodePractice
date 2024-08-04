@@ -1,38 +1,31 @@
 public class WordSearch {
     boolean f = false;
+
     public boolean exist(char[][] board, String word) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                helper(board, word, i, j, "", new boolean[board.length][board[0].length]);
+                if (helper(board, word, i, j, 0, new boolean[board.length][board[0].length])) {
+                    return true;
+                }
             }
         }
-
-        return f;
+        return false;
     }
 
-    public void helper(char[][] board, String word, int row, int col, String curr, boolean[][] flag) {
-        //System.out.println(curr);
-        if (curr.length() > word.length()) return;
-        //System.out.println(curr + " " + row + " " + col);
-        if (row >= board.length|| row < 0 || col >= board[0].length || col < 0) return;
-        if (board[row][col] != word.charAt(curr.length())) return;
-        // System.out.println(curr);
-        if (flag[row][col]) return;
-        if ((curr + board[row][col]).equals(word)) {
-            f = true;
-            return;
-        }
-
+    public boolean helper(char[][] board, String word, int row, int col, int index, boolean[][] flag) {
+        if (index == word.length()) return true;
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) return false;
+        if (flag[row][col] || board[row][col] != word.charAt(index)) return false;
 
         flag[row][col] = true;
-        helper(board, word, row + 1, col, curr + board[row][col], flag);
-        //if (f) return;
-        helper(board, word, row - 1, col, curr + board[row][col], flag);
-        //if (f) return;
-        helper(board, word, row, col + 1, curr + board[row][col], flag);
-        //if (f) return;
-        helper(board, word, row, col - 1, curr + board[row][col], flag);
+
+        boolean result = helper(board, word, row + 1, col, index + 1, flag) ||
+                helper(board, word, row - 1, col, index + 1, flag) ||
+                helper(board, word, row, col + 1, index + 1, flag) ||
+                helper(board, word, row, col - 1, index + 1, flag);
+
         flag[row][col] = false;
+        return result;
     }
     public static void main(String[] args) {
         WordSearch solution = new WordSearch();
