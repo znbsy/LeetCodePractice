@@ -14,9 +14,9 @@ public class CoinChange {
         if (mem[amount] != Integer.MAX_VALUE) return mem[amount];
 
         int min = Integer.MAX_VALUE;
-        for (int i = 0; i < coins.length; i++) {
-            if (amount >= coins[i]) {
-                int temp = helper(coins, amount - coins[i]);
+        for (int coin : coins) {
+            if (amount >= coin) {
+                int temp = helper(coins, amount - coin);
                 if (temp != -1) {
                     min = Math.min(min, temp + 1);
                 }
