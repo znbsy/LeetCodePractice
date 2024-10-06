@@ -1,5 +1,10 @@
 public class UniquePathsII {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+
+        if (obstacleGrid[0][0] == 1) {
+            return 0;
+        }
+
         int n = obstacleGrid.length;
         int m = obstacleGrid[0].length;
 
