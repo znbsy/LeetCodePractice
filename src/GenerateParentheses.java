@@ -4,33 +4,24 @@ import java.util.List;
 import java.util.Set;
 
 public class GenerateParentheses {
-    static List<String> ans = new ArrayList<>();
-    public static List<String> generateParenthesis(int n) {
-        helper(n - 1, n, "(");
+
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+        helper(n, n, ans, "");
         return ans;
     }
 
-    public static void helper(int op, int cl, String curr) {
-        if (op == 0 && cl == 0) {
+    public void helper(int left, int right, List<String> ans, String curr) {
+        if (left == 0 && right == 0) {
             ans.add(curr);
-        }
-
-        if (op == cl) {
-            curr += "(";
-            helper(op - 1, cl, curr);
-        } else if (op == 0) {
-            curr += ")";
-            helper(op, cl - 1, curr);
-        } else if (cl == 0 ) {
             return;
-        } else {
-            helper(op - 1, cl, curr + "(");
-            helper(op, cl - 1, curr + ")");
+        }
+        if (left > 0) {
+            helper(left - 1, right, ans, curr + "(");
+        }
+        if (right > left && right > 0) {
+            helper(left, right - 1, ans, curr + ")");
         }
 
-    }
-
-    public static void main(String[] args) {
-        System.out.println(generateParenthesis(3));
     }
 }

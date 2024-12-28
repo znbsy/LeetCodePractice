@@ -1,27 +1,15 @@
 public class BestTimeToBuyAndSellStockII {
     public static int maxProfit(int[] prices) {
-        int profit = 0;
-        int curr = -1;
-        boolean buy = true;
+        int buy = Integer.MIN_VALUE;
+        int sell = 0;
 
         for (int i = 0; i < prices.length; i++) {
-            if (buy) {
-                if (i + 1 < prices.length && prices[i] < prices[i + 1]) {
-                    curr = prices[i];
-                    buy = false;
-                }
-            } else {
-                if (prices[i] > curr && i + 1 < prices.length && prices[i + 1] < prices[i]) {
-                    profit += prices[i] - curr;
-                    buy = true;
-                } else if (i == prices.length - 1) {
-                    profit += prices[i] - curr;
-                }
-            }
-
+            buy = Math.max(buy, sell - prices[i]);
+            sell = Math.max(sell, prices[i] + buy);
+            // System.out.println("b: " + buy + " s: " + sell);
 
         }
-        return profit;
+        return sell;
     }
 
     public static void main(String[] args) {
