@@ -7,34 +7,34 @@ public class MaximumDistanceinArrays {
         int low1 = Integer.MAX_VALUE;
         int low2 = Integer.MAX_VALUE;
         int l1 = -1;
-        int l2 = -1;
+        // int l2 = -1;
         int high1 = Integer.MIN_VALUE;
         int high2 = Integer.MIN_VALUE;
         int h1 = -1;
-        int h2 = -1;
+        // int h2 = -1;
 
         for (int i = 0; i < arrays.size(); i++) {
             List<Integer> arr = arrays.get(i);
             if (arr.get(0) < low1) {
                 low2 = low1;
                 low1 = arr.get(0);
-                l2 = l1;
+                // l2 = l1;
                 l1 = i;
 
             } else if (arr.get(0) < low2) {
                 low2 = arr.get(0);
-                l2 = i;
+                // l2 = i;
             }
 
             if (arr.get(arr.size() - 1) > high1) {
                 high2 = high1;
                 high1 = arr.get(arr.size() - 1);
-                h2 = h1;
+                // h2 = h1;
                 h1 = i;
 
             } else if (arr.get(arr.size() - 1) > high2) {
                 high2 = arr.get(arr.size() - 1);
-                h2 = i;
+                // h2 = i;
             }
         }
 
