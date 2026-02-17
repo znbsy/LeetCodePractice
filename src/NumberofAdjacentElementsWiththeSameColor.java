@@ -2,36 +2,34 @@ import java.util.Arrays;
 
 public class NumberofAdjacentElementsWiththeSameColor {
     public int[] colorTheArray(int n, int[][] queries) {
-        int[] ans = new int[queries.length];
-        int[] color = new int[n];
-        int count = 0;
-        int i = 0;
+       int[] ans = new int[queries.length];
+       int[] color = new int[n];
+       int count = 0;
 
-        for (var query : queries) {
-            int pos = query[0];
-            int curr = query[1];
-            if (color[pos] != 0) {
-                if (pos - 1 >= 0 && color[pos] == color[pos - 1]) {
+       for (int i = 0; i < queries.length; i++) {
+           var query = queries[i];
+           int pos = query[0];
+           int curr = query[1];
+
+           if (color[pos] != 0) {
+               if (pos > 0 && color[pos] == color[pos - 1]) {
                     count--;
-                }
-                if (pos + 1 < n && color[pos] == color[pos + 1]) {
-                    count--;
-                }
-            }
+               }
+               if (pos < n - 1 && color[pos] == color[pos + 1]) {
+                   count--;
+               }
+           }
+           color[pos] = curr;
 
-            color[pos] = curr;
-
-            if (pos -1 >= 0 && color[pos] == color[pos - 1]) {
-                count++;
-            }
-            if (pos + 1 < n && color[pos] == color[pos + 1]) {
-                count++;
-            }
-
-            ans[i] = count;
-            i++;
-        }
-        return ans;
+           if (pos > 0 && color[pos] == color[pos - 1]) {
+               count++;
+           }
+           if (pos < n - 1 && color[pos] == color[pos + 1]) {
+               count++;
+           }
+           ans[i] = count;
+       }
+       return ans;
 
     }
 
